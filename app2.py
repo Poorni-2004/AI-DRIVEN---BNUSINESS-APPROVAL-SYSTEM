@@ -7,8 +7,8 @@ CORS(app)
 
 db = mysql.connector.connect(
     host="localhost",
-    user="root",
-    password="Poorni@123",
+    user="YOUR USER NAME",
+    password="YOUR PASSWORD",
     database="business_portal"
 )
 cursor = db.cursor()
