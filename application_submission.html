@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Submission</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      width: 50%;
+      margin: auto;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      text-align: left;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Application Submission</h2>
+    <label for="approvalType">Select Certificate Type:</label>
+    <select id="approvalType">
+      <option value="trade_license">Trade License</option>
+      <option value="gst_registration">GST Registration</option>
+      <option value="pollution_clearance">Pollution Clearance</option>
+    </select>
+
+    <label for="businessName">Business Name:</label>
+    <input type="text" id="businessName" placeholder="Enter Business Name">
+
+    <label for="businessType">Business Type:</label>
+    <input type="text" id="businessType" placeholder="Enter Business Type">
+
+    <label for="businessAddress">Business Address:</label>
+    <input type="text" id="businessAddress" placeholder="Enter Business Address">
+
+    <label for="taxID">Tax ID:</label>
+    <input type="text" id="taxID" placeholder="Enter Tax ID">
+
+    <label for="registrationNumber">Registration Number:</label>
+    <input type="text" id="registrationNumber" placeholder="Enter Registration Number">
+
+    <label for="businessDescription">Business Description:</label>
+    <textarea id="businessDescription" placeholder="Describe your business"></textarea>
+
+    <button onclick="submitApplication()">Submit Application</button>
+  </div>
+
+  <script>
+    function submitApplication() {
+      const data = {
+        approval_type: $('#approvalType').val(),
+        business_name: $('#businessName').val(),
+        business_type: $('#businessType').val(),
+        business_address: $('#businessAddress').val(),
+        tax_id: $('#taxID').val(),
+        registration_number: $('#registrationNumber').val(),
+        business_description: $('#businessDescription').val()
+      };
+
+      $.ajax({
+        url: 'http://localhost:5000/api/submit_application',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+          alert(response.message);
+        },
+        error: function () {
+          alert("Error submitting application.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

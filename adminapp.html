@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Applications</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; background-color: #f4f4f4; }
+        .navbar { background: #333; padding: 15px; color: white; text-align: center; width: 100%; position: fixed; top: 0; left: 0; }
+        .sidebar { width: 250px; height: 100vh; background: #222; padding-top: 60px; color: white; position: fixed; top: 0; left: 0; }
+        .sidebar a { display: block; color: white; padding: 10px; text-decoration: none; margin: 10px; background: #444; text-align: center; border-radius: 5px; }
+        .sidebar a:hover { background: #555; }
+        .content { margin-left: 270px; padding: 80px 20px; width: 100%; }
+        .table-container { background: white; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #333; color: white; }
+        .approve, .reject { cursor: pointer; padding: 5px 10px; border: none; border-radius: 5px; color: white; }
+        .approve { background: green; }
+        .reject { background: red; }
+    </style>
+</head>
+<body>
+    <div class="navbar"><h2>Admin - Applications</h2></div>
+    <div class="sidebar">
+        <a href="admindashboard.html">Dashboard</a>
+        <a href="adminapp.html">Applications</a>
+        <a href="adminuser.html">Users</a>
+        <a href="adminpayment.html">Payments</a>
+        <a href="adminset.html">Settings</a>
+    </div>
+    <div class="content">
+        <h2>Application Management</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Business Name</th><th>Status</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td><td>ABC Pvt Ltd</td><td>Pending</td>
+                        <td>
+                            <button class="approve">Approve</button>
+                            <button class="reject">Reject</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>102</td><td>XYZ Industries</td><td>Approved</td>
+                        <td><button disabled>Approved</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+

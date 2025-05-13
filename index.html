@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aadhaar & OTP Verification</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            width: 40%;
+            margin: auto;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #otpSection, #roleSection {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Aadhaar & Email OTP Verification</h2>
+
+    <label for="aadhaar">Enter Aadhaar Number:</label>
+    <input type="text" id="aadhaar" placeholder="Enter 12-digit Aadhaar" maxlength="12">
+
+    <label for="email">Enter Email:</label>
+    <input type="email" id="email" placeholder="Enter your email">
+
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <div id="otpSection">
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" placeholder="Enter 6-digit OTP">
+        <button onclick="verifyOTP()">Verify OTP</button>
+    </div>
+
+    <div id="roleSection">
+        <label for="role">Select Role:</label>
+        <select id="role">
+            <option value="">--Select--</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button onclick="goToDashboard()">Continue</button>
+    </div>
+
+    <p id="message"></p>
+</div>
+
+<script>
+    function sendOTP() {
+        let aadhaar = document.getElementById("aadhaar").value;
+        let email = document.getElementById("email").value;
+
+        if (!/^\d{12}$/.test(aadhaar)) {
+            document.getElementById("message").innerHTML = "Invalid Aadhaar number!";
+            return;
+        }
+
+        if (!email.includes("@") || !email.includes(".")) {
+            document.getElementById("message").innerHTML = "Invalid Email!";
+            return;
+        }
+
+        $.ajax({
+            url: "http://localhost:3000/send-otp",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ email: email }),
+            success: function(response) {
+                document.getElementById("otpSection").style.display = "block";
+                document.getElementById("message").innerHTML = "OTP sent to your email.";
+            },
+            error: function(response) {
+                document.getElementById("message").innerHTML = "Error sending OTP.";
+            }
+        });
+    }
+
+    function verifyOTP() {
+        let email = document.getElementById("email").value;
+        let otp = document.getElementById("otp").value;
+
+        $.ajax({
+            url: "http://localhost:3000/verify-otp",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ email: email, otp: otp }),
+            success: function(response) {
+                document.getElementById("message").innerHTML = response.message;
+                document.getElementById("roleSection").style.display = "block";
+            },
+            error: function(response) {
+                document.getElementById("message").innerHTML = response.responseJSON.message;
+            }
+        });
+    }
+
+    function goToDashboard() {
+        let role = document.getElementById("role").value;
+
+        if (role === "user") {
+            window.location.href = "dashboard.html";
+        } else if (role === "admin") {
+            window.location.href = "admindashboard.html";
+        } else {
+            document.getElementById("message").innerHTML = "Please select a role.";
+        }
+    }
+</script>
+
+</body>
+</html>

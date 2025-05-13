@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Upload</title>
+    <style>
+        body { font-family: Arial; background: #f0f0f0; text-align: center; padding: 30px; }
+        .box { background: white; padding: 20px; border-radius: 10px; width: 400px; margin: auto; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background: green; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Upload Your Documents</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label>Aadhaar Card (name as aadhaar.jpg):</label>
+            <input type="file" name="aadhaar" required>
+            
+            <label>PAN Card (name as pan.jpg):</label>
+            <input type="file" name="pan" required>
+            
+            <label>Other Documents:</label>
+            <input type="file" name="other1">
+            <input type="file" name="other2">
+
+            <button type="submit">Upload & Verify</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("status").innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById("status").innerText = "Upload failed.";
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>

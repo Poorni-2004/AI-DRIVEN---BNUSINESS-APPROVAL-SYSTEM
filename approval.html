@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approval Tracking</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #4c40f7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #statusContainer {
+            margin-top: 20px;
+            display: none;
+        }
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .progress div {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 14px;
+            background: #ddd;
+            color: #555;
+            position: relative;
+        }
+        .progress div.active {
+            background: #4c40f7;
+            color: white;
+        }
+        .progress div::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 10px;
+            height: 10px;
+            background: #ddd;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .progress div.active::after {
+            background: #4c40f7;
+        }
+        .progress div:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Track Your Application</h2>
+
+        <label for="applicationId">Enter Application ID:</label>
+        <input type="text" id="applicationId" placeholder="Enter your Application ID">
+
+        <button onclick="trackApplication()">Track Status</button>
+
+        <!-- Status Display -->
+        <div id="statusContainer">
+            <h3>Status: <span id="statusText">Pending</span></h3>
+
+            <!-- Progress Bar -->
+            <div class="progress">
+                <div id="step1">Submitted</div>
+                <div id="step2">Under Review</div>
+                <div id="step3">Approved</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function trackApplication() {
+            let appId = document.getElementById("applicationId").value;
+            
+            if (!appId) {
+                alert("Please enter a valid Application ID.");
+                return;
+            }
+
+            // Simulated API response (replace this with a real backend API)
+            let statusList = ["Submitted", "Under Review", "Approved", "Rejected"];
+            let randomStatus = statusList[Math.floor(Math.random() * statusList.length)];
+
+            document.getElementById("statusText").innerText = randomStatus;
+            document.getElementById("statusContainer").style.display = "block";
+
+            // Reset progress bar
+            document.getElementById("step1").classList.remove("active");
+            document.getElementById("step2").classList.remove("active");
+            document.getElementById("step3").classList.remove("active");
+
+            if (randomStatus === "Submitted") {
+                document.getElementById("step1").classList.add("active");
+            } else if (randomStatus === "Under Review") {
+                document.getElementById("step1").classList.add("active");
+                document.getElementById("step2").classList.add("active");
+            } else if (randomStatus === "Approved") {
+                document.getElementById("step1").classList.add("active");
+                document.getElementById("step2").classList.add("active");
+                document.getElementById("step3").classList.add("active");
+            } else {
+                document.getElementById("statusText").innerText = "Rejected";
+                alert("Your application has been rejected. Please contact support.");
+            }
+        }
+    </script>
+
+</body>
+</html>

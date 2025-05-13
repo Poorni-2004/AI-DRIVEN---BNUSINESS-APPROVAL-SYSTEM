@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business License</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .certificate {
+            background: white;
+            padding: 30px;
+            width: 60%;
+            margin: auto;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: left;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            font-size: 18px;
+        }
+        .download-btn {
+            padding: 10px 20px;
+            margin: 20px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="certificate">
+        <h1>Government of India</h1>
+        <h2>Business License</h2>
+        <p><b>Name:</b> <span id="userName"></span></p>
+        <p><b>Business Name:</b> <span id="businessName"></span></p>
+        <p><b>Certificate Type:</b> Business License</p>
+        <p><b>Issued Date:</b> <span id="issuedDate"></span></p>
+        
+        <a href="C:\Users\Mohanagandhi\Desktop\swas\cerificates\business_license.pdf" download class="download-btn">Download Certificate</a>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById("userName").textContent = urlParams.get("name") || "Poornima M";
+        document.getElementById("businessName").textContent = urlParams.get("business") || "ABC PRIVATE LTD";
+        document.getElementById("issuedDate").textContent = new Date().toLocaleDateString();
+    </script>
+
+</body>
+</html>
